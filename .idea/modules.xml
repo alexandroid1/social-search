@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/social-search.iml" filepath="$PROJECT_DIR$/.idea/modules/social-search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/social-search_main.iml" filepath="$PROJECT_DIR$/.idea/modules/social-search_main.iml" group="social-search" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/social-search_test.iml" filepath="$PROJECT_DIR$/.idea/modules/social-search_test.iml" group="social-search" />
+    </modules>
+  </component>
+</project>
