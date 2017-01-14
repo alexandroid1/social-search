@@ -1,6 +1,7 @@
 package nl.codeimpact.facebook.core.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -10,6 +11,7 @@ import java.util.Properties;
 
 import static nl.codeimpact.facebook.core.conversion.TxtFileListTransfer.fileToList;
 import static nl.codeimpact.facebook.core.settings.PropLoader.getProperties;
+import static nl.codeimpact.facebook.core.settings.TimeSetter.waiteOneSec;
 
 public class Facebook {
 
@@ -23,11 +25,17 @@ public class Facebook {
 
         Properties prop = getProperties("fb");
 
-        driver.get(prop.getProperty("searchURL"));
+        //driver.get(prop.getProperty("searchURL"));
 
         loginToFB(prop, driver);
 
         driver.get(prop.getProperty("searchBaseURL")+prop.getProperty("searchKeyWord"));
+
+        while(true){
+            JavascriptExecutor jse = (JavascriptExecutor)driver;
+            jse.executeScript("window.scrollBy(0,250)", "");
+            waiteOneSec();
+        }
     }
 
     protected static void loginToFB(Properties prop, WebDriver driver) {

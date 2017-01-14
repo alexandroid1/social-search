@@ -10,7 +10,7 @@ public class TimeSetter {
         return (int) randNumber * 1000 + 500;
     }
 
-    protected void waiteOneSec() {
+    public static void waiteOneSec() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
