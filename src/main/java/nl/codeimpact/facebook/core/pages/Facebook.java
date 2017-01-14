@@ -19,13 +19,15 @@ public class Facebook {
         this.driver = webdriver;
     }
 
-    public void login(String email, String password) {
+    public void login() {
 
         Properties prop = getProperties("fb");
 
         driver.get(prop.getProperty("searchURL"));
 
         loginToFB(prop, driver);
+
+        driver.get(prop.getProperty("searchBaseURL")+prop.getProperty("searchKeyWord"));
     }
 
     protected static void loginToFB(Properties prop, WebDriver driver) {

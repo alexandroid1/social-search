@@ -18,7 +18,7 @@ public class Application {
         Properties prop = getProperties("fb");
 
         Facebook facebook = new Facebook(driver);
-        facebook.login("username", "password");
+        facebook.login();
 
         Search search = new Search();
         search.getAllProfilesSearchString("test");
