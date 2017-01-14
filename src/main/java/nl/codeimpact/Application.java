@@ -2,7 +2,6 @@ package nl.codeimpact;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import nl.codeimpact.facebook.core.pages.Facebook;
-import nl.codeimpact.facebook.core.pages.Search;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Application {
@@ -13,7 +12,5 @@ public class Application {
 
         Facebook facebook = new Facebook(driver);
         facebook.login();
-
-
     }
 }
