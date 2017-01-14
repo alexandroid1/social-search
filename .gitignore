@@ -61,3 +61,5 @@ fabric.properties
 .gitignore
 .gradle/
 build/
+/appliedListFB.txt
+/fb.properties
