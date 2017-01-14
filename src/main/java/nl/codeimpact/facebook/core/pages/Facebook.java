@@ -24,9 +24,7 @@ public class Facebook {
     public void login() {
 
         Properties prop = getProperties("fb");
-
-        //driver.get(prop.getProperty("searchURL"));
-
+        
         loginToFB(prop, driver);
 
         driver.get(prop.getProperty("searchBaseURL")+prop.getProperty("searchKeyWord"));
@@ -35,6 +33,9 @@ public class Facebook {
             JavascriptExecutor jse = (JavascriptExecutor)driver;
             jse.executeScript("window.scrollBy(0,250)", "");
             waiteOneSec();
+
+            Search search = new Search();
+            search.getAllProfilesSearchString("test");
         }
     }
 
