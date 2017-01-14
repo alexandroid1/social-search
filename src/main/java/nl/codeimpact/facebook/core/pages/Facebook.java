@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static nl.codeimpact.facebook.core.conversion.TxtFileListTransfer.fileToList;
+import static nl.codeimpact.facebook.core.conversion.TxtFileListTransfer.listToFile;
 import static nl.codeimpact.facebook.core.settings.PropLoader.getProperties;
 import static nl.codeimpact.facebook.core.settings.TimeSetter.waiteOneSec;
 
@@ -34,8 +35,20 @@ public class Facebook {
             jse.executeScript("window.scrollBy(0,250)", "");
             waiteOneSec();
 
-            Search search = new Search();
-            search.getAllProfiles();
+            java.util.List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]"));
+
+            ArrayList<String> getProfileIds = new ArrayList<String>();
+
+            for (int i = 0; i < links.size(); i++) {
+                try {
+                    String profileUrl = links.get(i).getAttribute("href");
+                    getProfileIds.add(profileUrl);
+                } catch (Exception e) {
+                    System.out.print("-");
+                }
+            }
+
+            listToFile(getProfileIds, prop.getProperty("appliedFilePath"));
         }
     }
 

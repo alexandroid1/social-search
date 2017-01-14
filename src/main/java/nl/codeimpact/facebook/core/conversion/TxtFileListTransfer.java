@@ -28,7 +28,7 @@ public class TxtFileListTransfer {
         s.close();
     }
 
-    protected void listToFile(List<String> appliedList, String src) {
+    public static void listToFile(List<String> appliedList, String src) {
         try {
             Files.write(Paths.get(src), appliedList);
         } catch (IOException e) {
