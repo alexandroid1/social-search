@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Search {
 
-    public ArrayList<String> getAllProfilesSearchString(String searchString) {
+    public ArrayList<String> getAllProfiles() {
 
         return new ArrayList<>();
     }

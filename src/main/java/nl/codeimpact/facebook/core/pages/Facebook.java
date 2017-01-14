@@ -24,7 +24,7 @@ public class Facebook {
     public void login() {
 
         Properties prop = getProperties("fb");
-        
+
         loginToFB(prop, driver);
 
         driver.get(prop.getProperty("searchBaseURL")+prop.getProperty("searchKeyWord"));
@@ -35,7 +35,7 @@ public class Facebook {
             waiteOneSec();
 
             Search search = new Search();
-            search.getAllProfilesSearchString("test");
+            search.getAllProfiles();
         }
     }
 
