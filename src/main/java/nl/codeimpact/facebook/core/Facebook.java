@@ -10,18 +10,22 @@ import java.util.List;
 import java.util.Properties;
 
 import static nl.codeimpact.facebook.conversion.TxtFileListTransfer.fileToList;
-import static nl.codeimpact.facebook.conversion.TxtFileListTransfer.listToFile;
 import static nl.codeimpact.facebook.settings.PropLoader.getProperties;
 import static nl.codeimpact.facebook.settings.TimeSetter.waiteOneSec;
 
 public class Facebook {
 
-    private WebDriver driver;
+    private static WebDriver driver;
     private Properties prop;
     private List<String> passwordList;
     private String loginStr;
     private String passwordStr;
     private String searchUrlStr;
+
+    public String getResultFilePathStr() {
+        return resultFilePathStr;
+    }
+
     private String resultFilePathStr;
 
     public Facebook(WebDriver webdriver) {
@@ -53,25 +57,29 @@ public class Facebook {
         driver.get(prop.getProperty("searchBaseURL")+prop.getProperty("searchKeyWord"));
     }
 
-    public void doSearch() {
-        while(true){
-            JavascriptExecutor jse = (JavascriptExecutor)driver;
-            jse.executeScript("window.scrollBy(0,250)", "");
-            waiteOneSec();
+    public ArrayList<String> doSearch() {
+        ArrayList<String> getProfileIds = new ArrayList<String>();
+        try {
+            getProfileIds.add("");
+            while (true) {
+                JavascriptExecutor jse = (JavascriptExecutor) driver;
+                jse.executeScript("window.scrollBy(0,250)", "");
+                waiteOneSec();
 
-            List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]"));
+                List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]"));
 
-            ArrayList<String> getProfileIds = new ArrayList<>();
-
-            for (int i = 0; i < links.size(); i++) {
-                try {
-                    String profileUrl = links.get(i).getAttribute("href");
-                    getProfileIds.add(profileUrl);
-                } catch (Exception e) {
-                    System.out.print("-");
+                for (int i = 0; i < links.size(); i++) {
+                    try {
+                        String profileUrl = links.get(i).getAttribute("href");
+                        getProfileIds.add(profileUrl);
+                    } catch (Exception e) {
+                        System.out.print("-");
+                    }
                 }
             }
-            listToFile(getProfileIds, resultFilePathStr);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return getProfileIds;
     }
 }

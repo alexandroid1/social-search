@@ -4,6 +4,10 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 import nl.codeimpact.facebook.core.Facebook;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.ArrayList;
+
+import static nl.codeimpact.facebook.conversion.TxtFileListTransfer.listToFile;
+
 public class Application {
 
     public static void main(String[] args) {
@@ -13,6 +17,8 @@ public class Application {
         Facebook facebook = new Facebook(driver);
         facebook.init();
         facebook.doLogin();
-        facebook.doSearch();
+
+        ArrayList<String> getProfileIds = facebook.doSearch();
+        listToFile(getProfileIds, facebook.getResultFilePathStr());
     }
 }
