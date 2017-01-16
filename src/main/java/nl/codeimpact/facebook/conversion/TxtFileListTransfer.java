@@ -1,4 +1,4 @@
-package nl.codeimpact.facebook.core.conversion;
+package nl.codeimpact.facebook.conversion;
 
 import java.io.File;
 import java.io.FileNotFoundException;

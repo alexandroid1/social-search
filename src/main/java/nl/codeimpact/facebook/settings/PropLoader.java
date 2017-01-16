@@ -1,4 +1,4 @@
-package nl.codeimpact.facebook.core.settings;
+package nl.codeimpact.facebook.settings;
 
 import java.io.FileInputStream;
 import java.io.IOException;

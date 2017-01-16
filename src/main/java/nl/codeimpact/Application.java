@@ -1,7 +1,7 @@
 package nl.codeimpact;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
-import nl.codeimpact.facebook.core.pages.Facebook;
+import nl.codeimpact.facebook.core.Facebook;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Application {
@@ -11,6 +11,8 @@ public class Application {
         ChromeDriver driver = new ChromeDriver();
 
         Facebook facebook = new Facebook(driver);
-        facebook.login();
+        facebook.init();
+        facebook.doLogin();
+        facebook.doSearch();
     }
 }

@@ -1,4 +1,4 @@
-package nl.codeimpact.facebook.core.pages;
+package nl.codeimpact.facebook.pages;
 
 import java.util.ArrayList;
 

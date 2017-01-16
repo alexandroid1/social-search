@@ -1,4 +1,4 @@
-package nl.codeimpact.facebook.core.settings;
+package nl.codeimpact.facebook.settings;
 
 /**
  * Created by Oleksandr on 06.01.2017.
