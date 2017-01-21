@@ -9,42 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static nl.codeimpact.facebook.conversion.TxtFileListTransfer.fileToList;
-import static nl.codeimpact.facebook.settings.PropLoader.getProperties;
 import static nl.codeimpact.facebook.settings.TimeSetter.waiteOneSec;
 
 public class Facebook {
 
     private static WebDriver driver;
     private Properties prop;
-    private List<String> passwordList;
     private String loginStr;
     private String passwordStr;
-    private String searchUrlStr;
 
-    public String getResultFilePathStr() {
-        return resultFilePathStr;
-    }
-
-    private String resultFilePathStr;
-
-    public Facebook(WebDriver webdriver) {
+    public Facebook(WebDriver webdriver,  String loginStr, String passwordStr, Properties prop) {
         this.driver = webdriver;
+        this.loginStr = loginStr;
+        this.passwordStr = passwordStr;
+        this.prop = prop;
     }
 
-    public void init() {
-        prop = getProperties("fb");
-        passwordList = new ArrayList<>();
-        fileToList(passwordList, prop.getProperty("loginpassfile"));
-        loginStr = passwordList.get(0);
-        passwordStr = passwordList.get(1);
-        searchUrlStr = prop.getProperty("searchURL");
-        resultFilePathStr = prop.getProperty("appliedFilePath");
-    }
-
-    public void doLogin() {
+    public void login() {
         driver.manage().window().maximize();
-        driver.get(searchUrlStr);
+        driver.get(prop.getProperty("searchURL"));
 
         WebElement emailInput = driver.findElement(By.name("email"));
         emailInput.sendKeys(loginStr);
@@ -57,7 +40,7 @@ public class Facebook {
         driver.get(prop.getProperty("searchBaseURL")+prop.getProperty("searchKeyWord"));
     }
 
-    public ArrayList<String> doSearch() {
+    public ArrayList<String> search() {
         ArrayList<String> getProfileIds = new ArrayList<String>();
         try {
             getProfileIds.add("");
