@@ -30,6 +30,7 @@ public class TxtFileListTransfer {
 
     public static void listToFile(List<String> appliedList, String src) {
         try {
+            Files.deleteIfExists(Paths.get(src));
             Files.write(Paths.get(src), appliedList);
         } catch (IOException e) {
             e.printStackTrace();

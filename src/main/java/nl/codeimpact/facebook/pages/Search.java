@@ -7,9 +7,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 import static nl.codeimpact.Application.prop;
+import static nl.codeimpact.facebook.conversion.TxtFileListTransfer.listToFile;
 
 public class Search {
 
@@ -48,14 +51,25 @@ public class Search {
                 JavascriptExecutor jse = (JavascriptExecutor) driver;
                 jse.executeScript("window.scrollBy(0,250)", "");
 
-                LinkedHashSet<WebElement> links =  new LinkedHashSet<> (driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]")));
+                List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]"));
 
-                links.forEach(profileUrl -> getProfileIds.add(profileUrl.getAttribute("href")));
-                links.forEach(profileUrl -> System.out.println(profileUrl.getAttribute("href")));
+                ArrayList<String> finalGetProfileIds = getProfileIds;
+                links.forEach(profileUrl -> finalGetProfileIds.add(profileUrl.getAttribute("href")));
+
+                getProfileIds = uniqueSort(finalGetProfileIds);
+
+                listToFile(getProfileIds, prop.getProperty("appliedFilePath"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return getProfileIds;
+    }
+
+    private ArrayList<String> uniqueSort(ArrayList<String> finalGetProfileIds) {
+        HashSet<String> linkNames = new HashSet<>(finalGetProfileIds);
+        ArrayList<String> getProfileIds = new ArrayList<>(linkNames);
+        Collections.sort(getProfileIds);
         return getProfileIds;
     }
 }
