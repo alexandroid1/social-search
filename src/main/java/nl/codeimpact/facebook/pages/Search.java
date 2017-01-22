@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import static nl.codeimpact.Application.prop;
 
@@ -48,17 +48,10 @@ public class Search {
                 JavascriptExecutor jse = (JavascriptExecutor) driver;
                 jse.executeScript("window.scrollBy(0,250)", "");
 
-                List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]"));
+                LinkedHashSet<WebElement> links =  new LinkedHashSet<> (driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]")));
 
-                for (int i = 0; i < links.size(); i++) {
-                    try {
-                        String profileUrl = links.get(i).getAttribute("href");
-                        getProfileIds.add(profileUrl);
-                        System.out.println(profileUrl);
-                    } catch (Exception e) {
-                        System.out.print("-");
-                    }
-                }
+                links.forEach(profileUrl -> getProfileIds.add(profileUrl.getAttribute("href")));
+                links.forEach(profileUrl -> System.out.println(profileUrl.getAttribute("href")));
             }
         } catch (Exception e) {
             e.printStackTrace();
