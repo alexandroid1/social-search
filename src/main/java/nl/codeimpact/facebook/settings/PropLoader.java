@@ -9,6 +9,7 @@ import java.util.Properties;
  * Created by Oleksandr on 27.12.2016.
  */
 public class PropLoader {
+
     public static Properties getProperties(String str) {
         Properties prop = new Properties();
         InputStream input = null;

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static nl.codeimpact.Application.prop;
-import static nl.codeimpact.facebook.settings.TimeSetter.waiteOneSec;
 
 public class Search {
 
@@ -48,7 +47,6 @@ public class Search {
             while (true) {
                 JavascriptExecutor jse = (JavascriptExecutor) driver;
                 jse.executeScript("window.scrollBy(0,250)", "");
-                waiteOneSec();
 
                 List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href,'ref=SEARCH&fref=nf')]"));
 
