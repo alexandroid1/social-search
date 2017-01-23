@@ -47,23 +47,25 @@ public class Search {
         this.facebook = facebook;
     }
 
-    public void setKeyword(String keyword) {
+    public Search setKeyword(String keyword) {
         this.keyword = keyword;
+        return this;
     }
 
-    public void setType(Type searchType) {
+    public Search setType(Type searchType) {
         this.searchType = searchType;
+        return this;
     }
 
     /**
      * Returns all profile id's
      * @return
      */
-    public ArrayList<String> execute(Type type) {
+    public ArrayList<String> execute() {
         ArrayList<String> profileIds = new ArrayList<>();
         WebDriver driver = facebook.getDriver();
 
-        driver.get( urlMap.get(type) + keyword);
+        driver.get( urlMap.get(searchType) + keyword);
 
         try {
             for (int i = 1; i < 150 ; i++) {
@@ -72,7 +74,7 @@ public class Search {
 
                // List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(PERSON)));
 
-                List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(type)));
+                List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(searchType)));
 
                 ArrayList<String> profileIdsInner = profileIds;
                 links.forEach(profileUrl -> profileIdsInner.add(profileUrl.getAttribute("href")));

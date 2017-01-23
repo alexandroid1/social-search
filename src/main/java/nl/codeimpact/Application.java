@@ -26,9 +26,10 @@ public class Application  {
         facebook.login(loginStr, passwordStr);
 
         Search search = new Search(facebook);
-        search.setKeyword(prop.getProperty("searchKeyWord"));
-        search.setType(Search.Type.PERSON);
-        search.execute(Search.Type.PERSON);
+        search
+                .setKeyword(prop.getProperty("searchKeyWord"))
+                .setType(Search.Type.PERSON)
+                .execute();
     }
 
 }
