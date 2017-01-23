@@ -7,9 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
-import static nl.codeimpact.Application.prop;
-import static nl.codeimpact.facebook.conversion.TxtFileListTransfer.listToFile;
 import static nl.codeimpact.facebook.pages.Search.Type.PERSON;
 import static nl.codeimpact.facebook.pages.Search.Type.TOP;
 
@@ -34,13 +33,13 @@ public class Search {
         xPathMap = new HashMap<Type, String>(){
             {
                 put(TOP, "//a[contains(@href,'ref=SEARCH&fref=nf')]");
-                put(PERSON, "//button[@aria-label='Add Friend']");
+                put(PERSON, "//div[@class='_gll']//a");
             }
         };
     }
 
-    private String keyword;
-    private Type searchType;
+    private String keyword = "";
+    private Type searchType = PERSON;
     private Facebook facebook = null;
 
     public Search(Facebook facebook) {
@@ -57,46 +56,27 @@ public class Search {
         return this;
     }
 
-    /**
-     * Returns all profile id's
-     * @return
-     */
     public ArrayList<String> execute() {
-        ArrayList<String> profileIds = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         WebDriver driver = facebook.getDriver();
-
-        driver.get( urlMap.get(searchType) + keyword);
-
-        try {
-            for (int i = 1; i < 150 ; i++) {
-                JavascriptExecutor jse = (JavascriptExecutor) driver;
-                jse.executeScript("window.scrollBy(0,250)", "");
-
-               // List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(PERSON)));
-
-                List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(searchType)));
-
-                ArrayList<String> profileIdsInner = profileIds;
-                links.forEach(profileUrl -> profileIdsInner.add(profileUrl.getAttribute("href")));
-                links.forEach(profileUrl -> System.out.println((profileUrl.getAttribute("href"))));
-
-                profileIds = profileIdsInner;
+        driver.get( urlMap.get(this.searchType) + keyword);
+        while(true) {
+            JavascriptExecutor jse = (JavascriptExecutor) driver;
+            jse.executeScript("window.scrollBy(0,250)", "");
+            if (driver.findElements(By.className("_24j")).size() > 0) {
+                break;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.MILLISECONDS);
         }
-        profileIds = uniqueSort(profileIds);
-        listToFile(profileIds, prop.getProperty("appliedFilePath"));
 
-        return profileIds;
+        List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(this.searchType)));
+        links.forEach(profileUrl -> ids.add(profileUrl.getAttribute("href")));
+
+
+
+
+        Collections.sort(ids);
+        return ids;
     }
-
-    private ArrayList<String> uniqueSort(ArrayList<String> finalGetProfileIds) {
-        HashSet<String> linkNames = new HashSet<>(finalGetProfileIds);
-        ArrayList<String> getProfileIds = new ArrayList<>(linkNames);
-        Collections.sort(getProfileIds);
-        return getProfileIds;
-    }
-
 }
 
