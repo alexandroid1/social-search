@@ -34,7 +34,7 @@ public class Search {
         xPathMap = new HashMap<Type, String>(){
             {
                 put(TOP, "//a[contains(@href,'ref=SEARCH&fref=nf')]");
-                put(PERSON, "//img[contains(@class,'profileImage img')]");
+                put(PERSON, "//button[@aria-label='Add Friend']");
             }
         };
     }
@@ -59,11 +59,11 @@ public class Search {
      * Returns all profile id's
      * @return
      */
-    public ArrayList<String> execute() {
+    public ArrayList<String> execute(Type type) {
         ArrayList<String> profileIds = new ArrayList<>();
         WebDriver driver = facebook.getDriver();
 
-        driver.get( urlMap.get(TOP) + keyword);
+        driver.get( urlMap.get(type) + keyword);
 
         try {
             for (int i = 1; i < 150 ; i++) {
@@ -72,7 +72,7 @@ public class Search {
 
                // List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(PERSON)));
 
-                List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(TOP)));
+                List<WebElement> links = driver.findElements(By.xpath(xPathMap.get(type)));
 
                 ArrayList<String> profileIdsInner = profileIds;
                 links.forEach(profileUrl -> profileIdsInner.add(profileUrl.getAttribute("href")));

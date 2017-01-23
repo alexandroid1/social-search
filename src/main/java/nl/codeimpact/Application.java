@@ -1,13 +1,13 @@
 package nl.codeimpact;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import nl.codeimpact.facebook.core.Facebook;
 import nl.codeimpact.facebook.pages.Search;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 import java.util.Properties;
 
+import static nl.codeimpact.facebook.settings.DriverInitializer.initDriver;
 import static nl.codeimpact.facebook.settings.PropInirializer.initProp;
 
 public class Application  {
@@ -18,9 +18,8 @@ public class Application  {
     public static String passwordStr;
 
     public static void main(String[] args) {
-        ChromeDriverManager.getInstance().setup();
-        ChromeDriver driver = new ChromeDriver();
 
+        WebDriver driver = initDriver();
         initProp();
 
         Facebook facebook = new Facebook(driver);
@@ -29,6 +28,7 @@ public class Application  {
         Search search = new Search(facebook);
         search.setKeyword(prop.getProperty("searchKeyWord"));
         search.setType(Search.Type.PERSON);
-        search.execute();
+        search.execute(Search.Type.PERSON);
     }
+
 }
