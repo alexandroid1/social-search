@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static nl.codeimpact.Application.prop;
+import static nl.codeimpact.facebook.Constants.FACEBOOK_BASE_URL;
 
 public class Facebook {
 
@@ -16,7 +16,7 @@ public class Facebook {
 
     public void login(String loginStr, String passwordStr) {
         driver.manage().window().maximize();
-        driver.get(prop.getProperty("searchURL"));
+        driver.get(FACEBOOK_BASE_URL);
 
         WebElement emailInput = driver.findElement(By.name("email"));
         emailInput.sendKeys(loginStr);

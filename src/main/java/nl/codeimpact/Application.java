@@ -7,7 +7,10 @@ import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import static nl.codeimpact.facebook.Constants.FACEBOOK_BASE_URL;
 import static nl.codeimpact.facebook.settings.DriverInitializer.initDriver;
 import static nl.codeimpact.facebook.settings.PropInirializer.initProp;
 
@@ -19,10 +22,8 @@ public class Application  {
     public static String passwordStr;
 
     public static void main(String[] args) {
-
         WebDriver driver = initDriver();
         initProp();
-
         Facebook facebook = new Facebook(driver);
         facebook.login(loginStr, passwordStr);
 
@@ -40,29 +41,44 @@ public class Application  {
 
         getIds(ids, linksWithIds, linksWithNamesOnly);
 
-        linksWithIds.forEach(System.out::println);
-        linksWithNamesOnly.forEach(System.out::println);
+       // linksWithIds.forEach(System.out::println);
+       // linksWithNamesOnly.forEach(System.out::println);
     }
 
     private static void getIds(ArrayList<String> ids, ArrayList<String> linksWithIds, ArrayList<String> linksWithNamesOnly) {
-        String beginStrWithIds = "https://www.facebook.com/profile.php?id=";
-        String endStrWithIds = "&ref=br_rs";
 
-        String beginStrWithNamesOnly = "https://www.facebook.com/";
-        String endStrWithNamesOnly = "?ref=br_rs";
+        for (String id : ids) {
+            if (id.contains("profile.php?id=")){
 
-        for (String item : ids) {
-            if (item.contains(beginStrWithIds)){
-                item = item.replace(beginStrWithIds,"");
-                item = item.replace(endStrWithIds,"");
-                linksWithIds.add(item);
+                linksWithIds.add(matchWithIds(id));
+
+                System.out.print(testWithIds(id));
+                System.out.println(" "+matchWithIds(id));
+
             } else {
-                item = item.replace(beginStrWithNamesOnly,"");
-                item = item.replace(endStrWithNamesOnly,"");
-                linksWithNamesOnly.add(item);
+                id = id.replace(FACEBOOK_BASE_URL,"").replace("?ref=br_rs","");
+                linksWithNamesOnly.add(id);
+
+                System.out.print(testWithIds(id));
+                System.out.println(" "+id);
             }
         }
-
     }
+
+    public static boolean testWithIds(String testIdString){
+        Pattern p = Pattern.compile(".*?(\\d+)",Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Matcher m = p.matcher(testIdString);
+        return m.matches();
+    }
+
+    public static String matchWithIds(String testIdString){
+        Pattern p = Pattern.compile(".*?(\\d+)",Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Matcher m = p.matcher(testIdString);
+        return (m.group(1)).toString();
+    }
+
+
+
+
 
 }
