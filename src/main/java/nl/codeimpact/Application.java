@@ -7,10 +7,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static nl.codeimpact.facebook.Constants.FACEBOOK_BASE_URL;
 import static nl.codeimpact.facebook.settings.DriverInitializer.initDriver;
 import static nl.codeimpact.facebook.settings.PropInirializer.initProp;
 
@@ -49,36 +46,15 @@ public class Application  {
 
         for (String id : ids) {
             if (id.contains("profile.php?id=")){
-
-                linksWithIds.add(matchWithIds(id));
-
-                System.out.print(testWithIds(id));
-                System.out.println(" "+matchWithIds(id));
-
+                id = id.substring(id.indexOf('=') + 1, id.lastIndexOf('&'));
+                linksWithIds.add(id);
+                System.out.println(" "+id);
             } else {
-                id = id.replace(FACEBOOK_BASE_URL,"").replace("?ref=br_rs","");
+                id = id.substring(id.lastIndexOf('/') + 1, id.lastIndexOf('?'));
                 linksWithNamesOnly.add(id);
-
-                System.out.print(testWithIds(id));
                 System.out.println(" "+id);
             }
         }
     }
-
-    public static boolean testWithIds(String testIdString){
-        Pattern p = Pattern.compile(".*?(\\d+)",Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Matcher m = p.matcher(testIdString);
-        return m.matches();
-    }
-
-    public static String matchWithIds(String testIdString){
-        Pattern p = Pattern.compile(".*?(\\d+)",Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Matcher m = p.matcher(testIdString);
-        return (m.group(1)).toString();
-    }
-
-
-
-
 
 }
