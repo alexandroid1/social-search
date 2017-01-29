@@ -1,4 +1,4 @@
-package nl.codeimpact.facebook.conversion;
+package nl.codeimpact.facebook.convert;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 
 
-public class TxtFileListTransfer {
+public class ListTransfer {
 
     public static void fileToList(List<String> appliedList, String src) {
         Scanner s = null;

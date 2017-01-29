@@ -1,7 +1,7 @@
 package nl.codeimpact.facebook.settings;
 
-import nl.codeimpact.Application;
-import nl.codeimpact.facebook.conversion.TxtFileListTransfer;
+import nl.codeimpact.FBRunner;
+import nl.codeimpact.facebook.convert.ListTransfer;
 
 import java.util.ArrayList;
 
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public class PropInirializer {
 
     public static void initProp() {
-        Application.prop = PropLoader.getProperties("fb");
-        Application.passwordList = new ArrayList<>();
-        TxtFileListTransfer.fileToList(Application.passwordList, Application.prop.getProperty("loginpassfile"));
-        Application.loginStr = Application.passwordList.get(0);
-        Application.passwordStr = Application.passwordList.get(1);
+        FBRunner.prop = PropLoader.getProperties("fb");
+        FBRunner.passwordList = new ArrayList<>();
+        ListTransfer.fileToList(FBRunner.passwordList, FBRunner.prop.getProperty("loginpassfile"));
+        FBRunner.loginStr = FBRunner.passwordList.get(0);
+        FBRunner.passwordStr = FBRunner.passwordList.get(1);
     }
 
 }

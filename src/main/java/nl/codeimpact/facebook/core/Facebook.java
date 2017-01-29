@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static nl.codeimpact.facebook.Constants.FACEBOOK_BASE_URL;
+import static nl.codeimpact.facebook.settings.Constants.FACEBOOK_BASE_URL;
 
 public class Facebook {
 

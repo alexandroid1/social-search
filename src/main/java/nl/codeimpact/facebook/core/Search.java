@@ -1,6 +1,5 @@
-package nl.codeimpact.facebook.pages;
+package nl.codeimpact.facebook.core;
 
-import nl.codeimpact.facebook.core.Facebook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -9,8 +8,8 @@ import org.openqa.selenium.WebElement;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static nl.codeimpact.facebook.Constants.END_OF_SEARCH_RESULTS_CLASS_NAME;
-import static nl.codeimpact.facebook.pages.Search.Type.*;
+import static nl.codeimpact.facebook.settings.Constants.END_OF_SEARCH_RESULTS_CLASS_NAME;
+import static nl.codeimpact.facebook.core.Search.Type.*;
 
 public class Search {
 

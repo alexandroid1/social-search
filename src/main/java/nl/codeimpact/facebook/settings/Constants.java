@@ -1,4 +1,4 @@
-package nl.codeimpact.facebook;
+package nl.codeimpact.facebook.settings;
 
 public class Constants {
 

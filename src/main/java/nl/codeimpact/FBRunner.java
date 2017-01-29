@@ -2,22 +2,15 @@ package nl.codeimpact;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.codeimpact.facebook.core.Facebook;
-import nl.codeimpact.facebook.pages.Search;
+import nl.codeimpact.facebook.core.Search;
 import org.apache.log4j.BasicConfigurator;
-import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static nl.codeimpact.facebook.settings.DriverInitializer.initDriver;
-import static nl.codeimpact.facebook.settings.PropInirializer.initProp;
-
-
 @Slf4j
-public class Application  {
-
- //  private static final Logger log = LoggerFactory.getLogger(Application.class);
+public class FBRunner extends nl.codeimpact.facebook.settings.FBLogin {
 
     public static Properties prop;
     public static List<String> passwordList;
@@ -27,11 +20,7 @@ public class Application  {
     public static void main(String[] args) {
 
         BasicConfigurator.configure();
-
-        WebDriver driver = initDriver();
-        initProp();
-        Facebook facebook = new Facebook(driver);
-        facebook.login(loginStr, passwordStr);
+        Facebook facebook = loginToFacebook();
 
         Search search = new Search(facebook);
 
