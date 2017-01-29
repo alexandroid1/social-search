@@ -111,15 +111,9 @@ public class InfoFieldMapper {
 
         Thread.sleep(1000);
 
-        //@todo we need to parse / sort
         List<WebElement> div = driver.findElements(By.xpath("//div[@class='_4ms4']"));
         div.forEach(link->log.debug(" education links = " + link.getText()));
-
-        // @todo
-        // 2. loop trough work elements.
-        // 3. create new work objects.
-        // 4. add them in the person object.
-        // 5. same for study.
+        
     }
 
     private String getIDsFromProfileUrl(String profileUrl) {
