@@ -113,8 +113,7 @@ public class InfoFieldMapper {
 
         //@todo we need to parse / sort
         List<WebElement> div = driver.findElements(By.xpath("//div[@class='_4ms4']"));
-        div.forEach(link->log.debug(" education item = "+ link.getText()));
-
+        div.forEach(link->log.debug(" education links = " + link.getText()));
 
         // @todo
         // 2. loop trough work elements.
