@@ -11,7 +11,7 @@ import static nl.codeimpact.facebook.settings.PropInirializer.initProp;
  * Created by Oleksandr on 29.01.2017.
  */
 public class FBLogin {
-    protected static Facebook loginToFacebook() {
+    public static Facebook loginToFacebook() {
         WebDriver driver = initDriver();
         initProp();
         Facebook facebook = new Facebook(driver);

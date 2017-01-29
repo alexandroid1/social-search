@@ -1,8 +1,11 @@
 package nl.codeimpact.facebook.profile;
 
+import lombok.Data;
+
 /**
  * Created by Oleksandr on 24.01.2017.
  */
+@Data
 public class ProfileId {
     private String profileId = null;
     private String profileName = null;
@@ -11,19 +14,14 @@ public class ProfileId {
     }
 
     public ProfileId(String profileIdentifier) {
-
-        // @todo if it is a id, set the profile id, if it is a profile name, set the ProfileName
+        if (profileIdentifier.matches("[0-9]+")) {
+            setProfileId(profileIdentifier);
+        } else {
+            setProfileName(profileIdentifier);
+        }
     }
 
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
-    }
-
-    public void setProfileId(String profileId) {
-        this.profileId = profileId;
-    }
-
-    public String getProfileIdentintifier() {
+    public String getProfileIdentifier() {
         String profileIdentifier = null;
         if (profileName != null) {
             profileIdentifier = profileName;
@@ -34,17 +32,14 @@ public class ProfileId {
         return profileIdentifier;
     }
 
-    public String getProfileName() {
-        return profileName;
-    }
-
-    public String getProfileId() {
-        return profileId;
-    }
-
     public static ProfileId getProfileIdFromUrl(String url) {
+        String identifier;
+        if (url.contains("profile.php?id=")) {
+            identifier = url.substring(url.indexOf('=') + 1, url.lastIndexOf('&'));
+        } else {
+            identifier = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
+        }
 
-        // @todo strip url with regex, only profile id/profile name will stay.
-        return new ProfileId("");
+        return new ProfileId(identifier);
     }
 }

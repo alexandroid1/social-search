@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import static nl.codeimpact.facebook.settings.Constants.END_OF_SEARCH_RESULTS_CLASS_NAME;
 import static nl.codeimpact.facebook.core.Search.Type.*;
+import static nl.codeimpact.facebook.settings.Constants.FACEBOOK_BASE_URL;
 
 public class Search {
 
@@ -21,17 +22,16 @@ public class Search {
     static {
         urlMap = new HashMap<Type, String>(){
             {
-                put(TOP, "https://www.facebook.com/search/top/?init=quick&q=");
-                put(NEWEST, "https://www.facebook.com/search/latest/?q=");
-                put(PERSON, "https://www.facebook.com/search/people/?q=");
-                put(PICTURE, "https://www.facebook.com/search/photos/?q=");
-                put(VIDEO, "https://www.facebook.com/search/videos/?q=");
-                put(PAGE, "https://www.facebook.com/search/pages/?q=");
-                put(PLACE, "https://www.facebook.com/search/places/?q=");
-                put(GROUP, "https://www.facebook.com/search/groups/?q=");
-                put(APP, "https://www.facebook.com/search/apps/?q=");
-                put(EVENT, "https://www.facebook.com/search/events/?q=");
-
+                put(TOP, FACEBOOK_BASE_URL + "search/top/?init=quick&q=");
+                put(NEWEST, FACEBOOK_BASE_URL + "search/latest/?q=");
+                put(PERSON, FACEBOOK_BASE_URL + "search/people/?q=");
+                put(PICTURE, FACEBOOK_BASE_URL + "search/photos/?q=");
+                put(VIDEO, FACEBOOK_BASE_URL + "search/videos/?q=");
+                put(PAGE, FACEBOOK_BASE_URL + "search/pages/?q=");
+                put(PLACE, FACEBOOK_BASE_URL + "search/places/?q=");
+                put(GROUP, FACEBOOK_BASE_URL + "search/groups/?q=");
+                put(APP, FACEBOOK_BASE_URL + "search/apps/?q=");
+                put(EVENT, FACEBOOK_BASE_URL + "search/events/?q=");
             }
         };
     }

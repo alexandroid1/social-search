@@ -1,16 +1,21 @@
 package nl.codeimpact;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.codeimpact.facebook.DTO.Person;
 import nl.codeimpact.facebook.core.Facebook;
-import nl.codeimpact.facebook.core.Search;
+import nl.codeimpact.facebook.core.FacebookProfile;
+import nl.codeimpact.facebook.profile.InfoSegment;
+import nl.codeimpact.facebook.profile.ProfileId;
 import org.apache.log4j.BasicConfigurator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static nl.codeimpact.facebook.settings.FBLogin.loginToFacebook;
+
 @Slf4j
-public class FBRunner extends nl.codeimpact.facebook.settings.FBLogin {
+public class FBRunner {
 
     public static Properties prop;
     public static List<String> passwordList;
@@ -22,22 +27,46 @@ public class FBRunner extends nl.codeimpact.facebook.settings.FBLogin {
         BasicConfigurator.configure();
         Facebook facebook = loginToFacebook();
 
-        Search search = new Search(facebook);
+
+
+/*        Search search = new Search(facebook);
 
         ArrayList<String> ids = new ArrayList<>(search
                 .setKeyword(prop.getProperty("searchKeyWord"))
                 .setType(Search.Type.PERSON)
-                .execute());
+                .execute());*/
 
-        ids.forEach(id->log.debug(" "+id));
+
+
+        /*---------ProfileId single profile----------*/
+
+
+        ProfileId profileId = new ProfileId();
+        String id = prop.getProperty("profilename");
+        profileId.setProfileName(id);
+
+        FacebookProfile profile = new FacebookProfile(facebook, profileId);
+
+        InfoSegment[] infoSegments = new InfoSegment[] {InfoSegment.WORK_AND_STUDY, InfoSegment.HOMETOWN};
+
+        profile.getInfo(infoSegments);
+
+        Person person = profile.getPersonObject();
+
+        person.getStudy().forEach(study->log.debug(study.toString()));
+        person.getWork().forEach(work->log.debug(work.toString()));
+
+        /*-----------------------------------------------*/
+
+/*        ids.forEach(id->log.debug(" "+id));
 
         ArrayList<String> linksWithIds = new ArrayList<>();
-        ArrayList<String> linksWithNamesOnly = new ArrayList<>();
+        ArrayList<String> linksWithNames = new ArrayList<>();
 
-        getIds(ids, linksWithIds, linksWithNamesOnly);
+        getIds(ids, linksWithIds, linksWithNames);
 
-       // linksWithIds.forEach(System.out::println);
-       // linksWithNamesOnly.forEach(System.out::println);
+        linksWithIds.forEach(id->log.debug(" "+id));
+        linksWithNames.forEach(id->log.debug(" "+id));*/
     }
 
     private static void getIds(ArrayList<String> ids, ArrayList<String> linksWithIds, ArrayList<String> linksWithNamesOnly) {
@@ -54,5 +83,18 @@ public class FBRunner extends nl.codeimpact.facebook.settings.FBLogin {
             }
         }
     }
+
+    public static ProfileId getProfileIdFromUrl(String url) {
+        String identifier;
+        if (url.contains("profile.php?id=")) {
+            identifier = url.substring(url.indexOf('=') + 1, url.lastIndexOf('&'));
+        } else {
+            identifier = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'));
+        }
+        return new ProfileId(identifier);
+    }
+
+
+
 
 }
