@@ -1,7 +1,9 @@
 package nl.codeimpact;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.codeimpact.facebook.core.Facebook;
 import nl.codeimpact.facebook.pages.Search;
+import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
@@ -11,7 +13,11 @@ import java.util.Properties;
 import static nl.codeimpact.facebook.settings.DriverInitializer.initDriver;
 import static nl.codeimpact.facebook.settings.PropInirializer.initProp;
 
+
+@Slf4j
 public class Application  {
+
+ //  private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static Properties prop;
     public static List<String> passwordList;
@@ -19,6 +25,9 @@ public class Application  {
     public static String passwordStr;
 
     public static void main(String[] args) {
+
+        BasicConfigurator.configure();
+
         WebDriver driver = initDriver();
         initProp();
         Facebook facebook = new Facebook(driver);
@@ -31,7 +40,7 @@ public class Application  {
                 .setType(Search.Type.PERSON)
                 .execute());
 
-        ids.forEach(System.out::println);
+        ids.forEach(id->log.debug(" "+id));
 
         ArrayList<String> linksWithIds = new ArrayList<>();
         ArrayList<String> linksWithNamesOnly = new ArrayList<>();
@@ -48,11 +57,11 @@ public class Application  {
             if (id.contains("profile.php?id=")){
                 id = id.substring(id.indexOf('=') + 1, id.lastIndexOf('&'));
                 linksWithIds.add(id);
-                System.out.println(" "+id);
+                log.debug(" "+id);
             } else {
                 id = id.substring(id.lastIndexOf('/') + 1, id.lastIndexOf('?'));
                 linksWithNamesOnly.add(id);
-                System.out.println(" "+id);
+                log.debug(" "+id);
             }
         }
     }
